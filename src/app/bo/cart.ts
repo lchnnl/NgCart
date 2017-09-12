@@ -2,12 +2,13 @@
  * Cart service
  * 
  */
-import { Injectable } from '@angular/core';
 
-import { CartItemService } from 'cart-item';
+/**
+ * Classes
+ */
+import { CartItem } from './cart-item';
 
-@Injectable()
-export class CartService {
+export class Cart {
 /**
  * TotalPrice = total price of cart without discount
  */
@@ -27,28 +28,24 @@ items: CartItem[];
 
 /**
  * Constructor: initializes the shopping cart
- * @param totalPrice Initialize cart with the total price
+ * @param items Initialize cart by adding the items to the art
  */
-constructor(totalPrice: number = 0, discount: number = 0){
-    this.totalPrice = totalPrice;
-    this.discount = discount;
-    this.updateTotalPriceInclDiscount();
-}
-
-/**
- *  Sets the total pice and updates totalPriceInclDiscount
- * @param totalPrice the total price
- */
-setTotalPrice(totalPrice: number){
-    this.totalPrice = totalPrice;
-    this.updateTotalPriceInclDiscount();
+constructor(cartItems: CartItem[])
+{
+    // Add all cartItems to item
+    this.items = cartItems;
+    for (let item of cartItems)
+    {
+        this.totalPrice += item.totalPrice;
+    }
 }
 
 /**
  * Sets the discounts and update totalPriceInclDiscont
  * @param discount in total values and not percentages
  */
-setDiscount(discount:number){
+setDiscount(discount: number)
+{
     this.discount = discount;
     this.updateTotalPriceInclDiscount();
 }
@@ -57,8 +54,10 @@ setDiscount(discount:number){
  * Add a new item to the items array
  * @param item CartItem
  */
-addItem(item: CartItem){
-    this.items.pop(item);
+addItem(item: CartItem)
+{
+    this.items.push(item);
+    this.totalPrice += item.totalPrice;
 }
 
 /**
