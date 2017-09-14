@@ -1,0 +1,5 @@
+
+    <span>{{ item.description }}</span>
+    <span><input [value]="item.amount" (input)="updateAmount($event)"></span>
+    <span>{{ item.getPrice() }}</span>
+    <span>{{ item.getTotalPrice() }}</span>

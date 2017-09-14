@@ -1,0 +1,9 @@
+<h1>{{ title }}</h1>
+
+<p *ngFor="let item of cart.items">
+  <app-cart-detail [item]="item" (onChangeTotalPrice)="calculatePrices(item)"></app-cart-detail>
+</p>
+
+<p>Subtotal: {{ cart.getTotalPrice() }}</p>
+<p>Discount: {{ cart.getDiscountAmount() }}</p>
+<p>Total:  {{ cart.getTotalPriceInclDiscount() }}</p>
