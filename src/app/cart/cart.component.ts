@@ -13,7 +13,7 @@ export class CartComponent implements OnInit {
   cart: Cart;
 
   constructor() {
-    this.title = 'Your order';
+    this.title = 'Cart overview';
     this.cart = MockCart;
    }
 

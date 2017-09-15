@@ -117,6 +117,8 @@ private calcTotalPrice(): void {
 
     if (this.totalPrice >= this.minAmountForDiscount) {
         this.discountAmount = this.totalPrice * this.discountPerc / 100;
+    } else {
+        this.discountAmount = 0;
     }
 
     this.totalPriceInclDiscount = this.totalPrice + this.discountAmount;

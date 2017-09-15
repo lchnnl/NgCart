@@ -1,5 +1,6 @@
-
-    <span>{{ item.description }}</span>
-    <span><input [value]="item.amount" (input)="updateAmount($event)"></span>
-    <span>{{ item.getPrice() }}</span>
-    <span>{{ item.getTotalPrice() }}</span>
+    <div class="row">
+    <div class="col-2"><input [value]="item.amount" (input)="updateAmount($event)" size="3"></div>
+    <div class="col-6">{{ item.description }}</div>
+    <div class="col-2">{{ item.getPrice() }}</div>
+    <div class="col-2">{{ item.getTotalPrice() }}</div>
+    </div>
