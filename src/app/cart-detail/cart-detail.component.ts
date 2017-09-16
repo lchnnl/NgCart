@@ -10,6 +10,7 @@ export class CartDetailComponent implements OnInit {
 
   @Input() item: CartItem;
   @Output() onChangeTotalPrice = new EventEmitter<CartItem>();
+  @Output() onDeleteItem = new EventEmitter<CartItem>();
 
   constructor() { }
 
@@ -18,11 +19,17 @@ export class CartDetailComponent implements OnInit {
 
   /**
    * Update the total price and emit ChangeTotalPrice event
-   * @param e   
+   * @param e  event
    */
   updateAmount($e) {
     this.item.updateAmount($e.target.value);
-    this.onChangeTotalPrice.emit(this.item)
+    this.onChangeTotalPrice.emit(this.item);
   }
 
+  /**
+   * remove cart item. Emit event and passes the item to be deleted
+   */
+  deleteItem() {
+    this.onDeleteItem.emit(this.item);
+  }
 }

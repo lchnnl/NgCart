@@ -1,11 +1,3 @@
-/**
- * Cart service
- * 
- */
-
-/**
- * Classes
- */
 import { CartItem } from './cart-item';
 
 export class Cart {
@@ -14,7 +6,7 @@ export class Cart {
  */
 totalPrice: number = 0;
 /**
- * 
+ * Minimum amount when discount has to be trigered.
  */
 minAmountForDiscount: number = 0;
 /**
@@ -40,26 +32,31 @@ items: CartItem[];
  */
 constructor(cartItems: CartItem[], minAmountForDiscount: number, discountPerc: number)
 {
+    // initialize the cart
     this.minAmountForDiscount = minAmountForDiscount;
-    this.setDiscountPerc(discountPerc);
-    // Add all cartItems to item
+    this.discountPerc = discountPerc;
     this.items = cartItems;
-    for (let item of cartItems)
-    {
-        this.totalPrice += item.totalPrice;
-    }
+    // recalculate the total amounts
     this.calcTotalPrice();
 }
 
 /**
- * Sets the discounts and update totalPriceInclDiscont
- * @param discount in total values and not percentages
+ * sets the min amount for discount
+ * @param amount  number
  */
-setDiscountPerc(discountPerc: number)
-{
-    this.discountPerc = discountPerc;
+updateMinAmountForDiscount(amount: number) {
+    this.minAmountForDiscount = amount;
+    this.calcTotalPrice();
 }
 
+/**
+ * sets the discount percentages
+ * @param discountPerc 
+ */
+updateDiscountPerc(discountPerc: number) {
+    this.discountPerc = discountPerc;
+    this.calcTotalPrice();
+}
 /**
  * Add a new item to the items array
  * @param item CartItem
@@ -67,41 +64,40 @@ setDiscountPerc(discountPerc: number)
 addItem(item: CartItem)
 {
     this.items.push(item);
-    this.totalPrice += item.totalPrice;
-}
-
-updateItem(updatedItem: CartItem){
-    for (let i in this.items){
-        if (this.items[i].id === updatedItem.id) {
-            // console.log (i + ":" + this.items[i].id);
-
-            // // this.totalPrice -= this.items[i].totalPrice;
-            // this.totalPrice += updatedItem.totalPrice;
-            this.items[i] = updatedItem;
-            // this.calcTotalPrice();
-            break;
-        }
-    }
-    console.log(updatedItem.id);
-    // this.totalPrice = updatedItem.totalPrice;
     this.calcTotalPrice();
 }
+
 /**
- * Remove item based of item number 'itemNumber'
- * @param itemNumber index number of item in items array
+ * Delete an item from the cart
+ * @param toDeleteItem Item to be deleted from the list
  */
-removeItemNumber(itemNumber: number) {
-    this.items.splice(itemNumber,1);
+deleteItem(toDeleteItem: CartItem){
+    // Find and delete the item
+    let i = this.items.indexOf(toDeleteItem);
+    if (i >= 0){
+        this.items.splice(i,1);
+    }
+    // recalculate the totals
+    this.calcTotalPrice();
 }
 
+/**
+ * returns discount amount
+ */
 getDiscountAmount() {
     return "€ " + this.discountAmount.toFixed(2);
 }
 
+/**
+ * returns total price
+ */
 getTotalPrice() {
     return "€ " + this.totalPrice.toFixed(2);
 }
 
+/**
+ * returns total prince including discount
+ */
 getTotalPriceInclDiscount() {
     return "€ " + this.totalPriceInclDiscount.toFixed(2);
 }
@@ -109,19 +105,22 @@ getTotalPriceInclDiscount() {
 /**
  * calculates the totalPriceInclDiscount field.
  */
-private calcTotalPrice(): void {
+calcTotalPrice(): void {
+    // recalculate total price excl discount
     this.totalPrice = 0;
     for (let i of this.items) {
         this.totalPrice += i.totalPrice;
     }
 
+    // recalculate discount amount
     if (this.totalPrice >= this.minAmountForDiscount) {
         this.discountAmount = this.totalPrice * this.discountPerc / 100;
     } else {
         this.discountAmount = 0;
     }
 
-    this.totalPriceInclDiscount = this.totalPrice + this.discountAmount;
+    // calculate total price including discount
+    this.totalPriceInclDiscount = this.totalPrice - this.discountAmount;
 }
 
 }

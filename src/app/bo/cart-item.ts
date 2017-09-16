@@ -1,13 +1,4 @@
-/**
- * Business object cart item.
- * A cart item can contain an amount. Description of Item, unit price and total price
- */
-
 export class CartItem {
-    /**
-     * identifier of the item
-     */
-    id: number
     /**
      * amount of a specific item
      */
@@ -28,13 +19,11 @@ export class CartItem {
     /**
      * Constructor
      * 
-     * @param id            identifer
      * @param amount        amount of an item.
      * @param description   description of an item
      * @param price         unit price of an item
      */
-    constructor(id: number, amount: number, description: string, price: number){
-        this.id = id;
+    constructor(amount: number, description: string, price: number){
         this.amount = amount;
         this.description = description;
         this.price = price;
@@ -67,7 +56,7 @@ export class CartItem {
     /**
      * calcualtes the total price of an item.
      */
-    private calculateTotalPrice(){
+    calculateTotalPrice(){
         this.totalPrice = this.amount * this.price;
     }
 

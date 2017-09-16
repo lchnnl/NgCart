@@ -7,19 +7,35 @@
 
 <div class="row">
   <div class="col-8">
-    <div class="row">
+    <div class="row header">
+      <div class="col-12"><h2>List</h2></div>
+    </div>
+    <div class="row header">
       <div class="col-2">#</div>
       <div class="col-6">Description</div>
       <div class="col-2">Unit price</div>
       <div class="col-2">Total price</div>
     </div>
-<div *ngFor="let item of cart.items">
-  <app-cart-detail [item]="item" (onChangeTotalPrice)="calculatePrices(item)"></app-cart-detail>
-</div>
+    <div *ngFor="let item of cart.items">
+      <app-cart-detail [item]="item" (onChangeTotalPrice)="calculatePrices()" (onDeleteItem)="deleteItem(item)"></app-cart-detail>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col-3 total-price">Subtotal:</div>
+      <div class="col-2 total-price top-border">{{ cart.getTotalPrice() }}</div>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col-3">{{ cart.discountPerc }}% discount:</div>
+      <div class="col-2"> {{ cart.getDiscountAmount() }}</div>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col-3">Total:</div>
+      <div class="col-2"> {{ cart.getTotalPriceInclDiscount() }}</div>
+    </div>
+
+    <p></p>
+    <p>  </p>
+  </div>
+  <div class="col-4">
+    <app-cart-settings [cart]="cart" (onAddItem)="addItem($event)"></app-cart-settings>
   </div>
 </div>
-
-<p>Subtotal: {{ cart.getTotalPrice() }}</p>
-<p>{{ cart.discountPerc }}% discount  : {{ cart.getDiscountAmount() }}</p>
-<p>Total:  {{ cart.getTotalPriceInclDiscount() }}</p>
-<button type="button" class="btn btn-primary">test</button>

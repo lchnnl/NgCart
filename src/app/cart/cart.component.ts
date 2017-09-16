@@ -13,16 +13,35 @@ export class CartComponent implements OnInit {
   cart: Cart;
 
   constructor() {
-    this.title = 'Cart overview';
+    this.title = 'My Cart';
     this.cart = MockCart;
    }
 
   ngOnInit() {
   }
 
-  calculatePrices(cartItem: CartItem) {
-    this.cart.updateItem(cartItem);
-    // this.cart.totalPrice = cartItem.totalPrice;
+  /**
+   * function to trigger the cart to recalculate the cart totals
+   */
+  calculatePrices() {
+    this.cart.calcTotalPrice();
   }
 
+  /**
+   * delete item from the cart item list
+   * @param cartItem CartItem
+   */
+  deleteItem(cartItem: CartItem){
+    this.cart.deleteItem(cartItem);
+  }
+
+  /**
+   * Add a new item to cart list
+   * @param item  CartItem
+   */
+  addItem(item: CartItem){
+    // create a new instance of the new item. Data binding for the new item is not desired
+    let newItem: CartItem = new CartItem(item.amount,item.description,item.price);
+    this.cart.addItem(newItem);
+  }
 }
