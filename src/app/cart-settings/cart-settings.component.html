@@ -1,0 +1,29 @@
+    <div class="row">
+      <div class="col-12"><h3>Discount settings</h3></div>
+    </div>
+    <div class="row">
+      <div class="col-6">Threshold discount:</div>
+      <div class="col-6"><input size=10 [value]="cart.minAmountForDiscount" (input)="setDiscountThreshold($event)"></div>
+    </div>
+    <div class="row">
+      <div class="col-6">% discount:</div>
+      <div class="col-6"><input size=10 [value]="cart.discountPerc" (input)="setDiscountPerc($event)"></div>
+    </div>
+    <div class="row">
+      <div class="col-12"><h3>Add product</h3></div>
+    </div>
+    <div class="row">
+      <div class="col-6">Amount</div>
+      <div class="col-6"><input size=10 [value]="item.amount" (input)="setItemAmount($event)"></div>
+    </div>
+    <div class="row">
+      <div class="col-6">Description</div>
+      <div class="col-6"><input size=10 [value]="item.description" (input)="setItemDescription($event)"></div>
+    </div>
+    <div class="row">
+      <div class="col-6">Unit price</div>
+      <div class="col-6"><input size=10 [value]="item.price" (input)="setItemPrice($event)"></div>
+    </div>
+    <div class="row justify-content-start">
+      <div class="col-6 md-left"><button class="btn btn-primary" (click)="addItem()">Add product</button></div>
+    </div>
